@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peşəkar Mobiloqraf Xidmətləri</title>
+    <style>
+        /* EKRA DAŞMASININ QARŞISINI ALMAQ VƏ BAZA ÜSLUBLARI */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: #05070c;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at 50% 0%, #0d1527, #04060a);
+            color: #f3f4f6;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Başlıq Sahəsi */
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 14px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin: 80px 0 40px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #ff6b00 0%, #ba01ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        /* Konteynerlər */
+        .pricing-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 35px;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        /* --- AYLIQ ABUNƏ PAKETLƏRİ --- */
+        .card {
+            width: 100%;
+            max-width: 360px;
+            border-radius: 28px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+
+        .card.start-pkg { background-image: url('https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?q=80&w=600&auto=format&fit=crop'); }
+        .card.start-pkg::before { background: linear-gradient(to bottom, rgba(7, 11, 22, 0.85), rgba(4, 6, 12, 0.98)); }
+        .card.start-pkg:hover { border-color: #00f2fe; box-shadow: 0 0 30px rgba(0, 242, 254, 0.2); transform: translateY(-10px); }
+        .card.start-pkg .card-title { color: #00f2fe; }
+        .card.start-pkg .cta-btn { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); color: #05070c; }
+        .card.start-pkg .features-list li::before { content: "✓"; color: #00f2fe; }
+
+        .card.pro-pkg { background-image: url('https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=600&auto=format&fit=crop'); }
+        .card.pro-pkg::before { background: linear-gradient(to bottom, rgba(22, 11, 5, 0.85), rgba(6, 3, 1, 0.98)); }
+        .card.pro-pkg:hover { border-color: #ff6b00; box-shadow: 0 0 30px rgba(255, 107, 0, 0.2); transform: translateY(-10px); }
+        .card.pro-pkg .card-title { color: #ff6b00; }
+        .card.pro-pkg .cta-btn { background: linear-gradient(135deg, #ff6b00 0%, #ff8800 100%); color: #05070c; }
+        .card.pro-pkg .features-list li::before { content: "✓"; color: #ff6b00; }
+
+        .card.premium-pkg { background-image: url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600&auto=format&fit=crop'); }
+        .card.premium-pkg::before { background: linear-gradient(to bottom, rgba(16, 7, 26, 0.85), rgba(5, 2, 9, 0.98)); }
+        .card.premium-pkg:hover { border-color: #ba01ff; box-shadow: 0 0 30px rgba(186, 1, 255, 0.2); transform: translateY(-10px); }
+        .card.premium-pkg .card-title { color: #ba01ff; }
+        .card.premium-pkg .cta-btn { background: linear-gradient(135deg, #ba01ff 0%, #d800ff 100%); color: #fff; }
+        .card.premium-pkg .features-list li::before { content: "✓"; color: #ba01ff; }
+
+        /* Kart Daxili Struktur */
+        .card-content { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; flex-grow: 1; }
+        .badge { position: absolute; top: -12px; right: 0; background: linear-gradient(135deg, #ff6b00 0%, #ff8800 100%); color: #05070c; font-size: 0.75rem; font-weight: 800; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; }
+        .card-title { font-size: 2rem; font-weight: 900; margin: 0 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+        .card-meta { color: #9ca3af; font-size: 0.92rem; margin-bottom: 25px; min-height: 45px; line-height: 1.5; }
+        .price-tag { font-size: 2.4rem; font-weight: 900; color: #ffffff; margin-bottom: 30px; display: flex; align-items: baseline; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 18px; }
+        .price-tag span { font-size: 1.05rem; color: #9ca3af; font-weight: normal; margin-left: 8px; }
+        .features-list { list-style: none; padding: 0; margin: 0 0 40px 0; flex-grow: 1; }
+        .features-list li { margin-bottom: 16px; font-size: 0.98rem; display: flex; align-items: center; color: #e5e7eb; }
+        .features-list li::before { font-weight: 900; margin-right: 14px; font-size: 1.2rem; }
+
+        .cta-btn { border: none; padding: 16px; border-radius: 16px; text-align: center; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; transition: all 0.3s ease; text-decoration: none; display: block; cursor: pointer; }
+        .cta-btn:hover { transform: scale(1.03); opacity: 0.95; }
+
+        /* --- FƏRDİ XİDMƏTLƏR --- */
+        .single-services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .single-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+            text-decoration: none;
+        }
+
+        .single-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #00f2fe;
+            transform: translateY(-5px);
+        }
+
+        .single-title { font-size: 1.25rem; font-weight: 700; color: #ffffff; margin: 0 0 10px 0; }
+        .single-desc { font-size: 0.92rem; color: #9ca3af; line-height: 1.5; margin-bottom: 20px; }
+        .single-price { font-size: 1.5rem; font-weight: 800; color: #00f2fe; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 15px; margin: 0; }
+
+        /* --- OYUN PORTALI (ƏN ALTDA) --- */
+        .game-section {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 2px dashed rgba(186, 1, 255, 0.3);
+            border-radius: 28px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .game-menu {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            padding: 11px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .menu-btn.active {
+            background: linear-gradient(135deg, #00f2fe 0%, #ba01ff 100%);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .game-box { display: none; width: 100%; min-height: 250px; }
+        .game-box.active { display: block; }
+
+        /* OYUN 1: Trend Catcher */
+        .catcher-track { width: 100%; height: 30px; background: #222; border-radius: 15px; position: relative; margin: 25px 0; overflow: hidden; }
+        .target-zone { width: 20%; height: 100%; background: #4caf50; position: absolute; left: 40%; box-shadow: 0 0 10px #4caf50; }
+        .pointer { width: 8px; height: 100%; background: #fff; position: absolute; left: 0; box-shadow: 0 0 8px #fff; }
+
+        /* OYUN 2: Yaddaş Oyunu */
+        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 340px; margin: 20px auto; }
+        .memory-card { height: 75px; background: rgba(255,255,255,0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); user-select: none; }
+        .memory-card.flipped { background: #ba01ff; color: white; }
+        .memory-card.matched { background: #4caf50; opacity: 0.6; }
+
+        /* OYUN 3: Şans Çarxı */
+        .wheel-container { position: relative; width: 180px; height: 180px; margin: 20px auto; }
+        .wheel { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #fff; position: relative; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); background: conic-gradient(#00f2fe 0deg 120deg, #ba01ff 120deg 240deg, #ff6b00 240deg 360deg); }
+        .wheel-pointer { position: absolute; top: -14px; left: calc(50% - 10px); width: 20px; height: 20px; background: red; clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 10; }
+
+        /* OYUN 4: XTQ Səviyyə Reaksiya Oyunu (Kvadrat) */
+        #game-canvas-area { width: 100%; max-width: 340px; height: 300px; background: #020408; position: relative; overflow: hidden; border: 2px solid #222; border-radius: 14px; margin: 20px auto; display: none; }
+        .target { width: 35px; height: 35px; background: #00f2fe; position: absolute; border-radius: 8px; cursor: pointer; box-shadow: 0 0 15px #00f2fe; }
+
+        /* PORTAL REZULTAT */
+        #portal-result { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #030509; border-radius: 20px; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 100; }
+        .btn-claim { background: #4caf50; color: white; text-decoration: none; padding: 12px 25px; border-radius: 10px; font-weight: bold; margin-top: 15px; display: inline-block; }
+
+        @media (max-width: 768px) {
+            body { padding: 40px 15px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; margin: 50px 0 25px 0; }
+            .card { max-width: 100%; }
+            .single-services-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <h1>Peşəkar Mobiloqraf Xidmətləri</h1>
+        <div class="subtitle">Müasir Sosial Media Strategiyaları və Yaradıcı Kontent Paketləri</div>
+    </div>
+
+    <div class="pricing-container">
+        <div class="card start-pkg">
+            <div class="card-content">
+                <div class="card-title">START</div>
+                <div class="card-meta">Kiçik bizneslər və yeni başlayan şəxsi brendlər üçün mükəmməl rəqəmsal addım.</div>
+                <div class="price-tag">350 - 450<span>AZN / aylıq</span></div>
+                <ul class="features-list">
+                    <li>Ayda 8 ədəd Reels / TikTok (4K)</li>
+                    <li>Trend ssenari və ideya dəstəyi</li>
+                    <li>Professional montaj & Rəng korreksiyası</li>
+                    <li>Həftədə 1 dəfə çəkiliş sessiyası</li>
+                    <li>48 saat ərzində sürətli təhvil</li>
+                </ul>
+                <a href="https://api.whatsapp.com/send?phone=994559636978&text=Salam%2C%20Start%20paketi%20bar%C9%99d%C9%99%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m." target="_blank" class="cta-btn">Sifariş Et</a>
+            </div>
+        </div>
+
+        <div class="card pro-pkg">
+            <div class="card-content">
+                <div class="badge">Ən Çox Seçilən</div>
+                <div class="card-title">PRO</div>
+                <div class="card-meta">Hesabını sürətlə böyütmək, müştəri və satış cəlb etmək istəyən aktiv bizneslərə.</div>
+                <div class="price-tag">600 - 800<span>AZN / aylıq</span></div>
+                <ul class="features-list">
+                    <li>Ayda 15 ədəd Reels / TikTok videosu</li>
+                    <li>Rəqib analizi və vizual kontent planı</li>
+                    <li>Professional işıq və yaxa mikrofonu</li>
+                    <li>Dinamik kəsimlər və trend altyazılar</li>
+                    <li>Həftədə 2 dəfə çəkiliş sessiyası</li>
+                    <li>24 - 48 saat ərzində sürətli təhvil</li>
+                </ul>
+                <a href="https://api.whatsapp.com/send?phone=994559636978&text=Salam%2C%20Pro%20paketi%20bar%C9%99d%C9%99%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m." target="_blank" class="cta-btn">Sifariş Et</a>
+            </div>
+        </div>
+
+        <div class="card premium-pkg">
+            <div class="card-content">
+                <div class="card-title">PREMIUM</div>
+                <div class="card-meta">Böyük şirkətlər, restoranlar və tam korporativ media dəstəyi tələb edən brendlər üçün.</div>
+                <div class="price-tag">1200 - 1500<span>AZN / aylıq</span></div>
+                <ul class="features-list">
+                    <li>24-30 Reels + 5-10 Professional Foto</li>
+                    <li>Eksklüziv Storytelling və Brend konsepti</li>
+                    <li>DJI Gimbal & çoxnöqtəli peşəkar işıq</li>
+                    <li>Sound Design & Qrafik effektlər</li>
+                    <li>Həftədə 3 dəfə və ya Çevik Qrafik</li>
+                    <li>24 saat ərzində Prioritet təhvil</li>
+                </ul>
+                <a href="https://api.whatsapp.com/send?phone=994559636978&text=Salam%2C%20Premium%20paketi%20%C3%BCzr%C9%99%20%C9%99m%C9%99kda%C5%9Fl%C4%B1q%20etm%C9%99k%20ist%C9%99yir%C9%99m." target="_blank" class="cta-btn">Bizimlə İşləyin</a>
+            </div>
+        </div>
+    </div>
+
+    <h2>2. Fərdi Xidmətlər və Birdəfəlik Tariflər</h2>
+    <div class="single-services-container">
+        <a href="https://api.whatsapp.com/send?phone=994559636978&text=Salam%2C%20F%C9%99rdi%20Reels%20%C3%A7%C9%99kili%C5%9Fi%20sifari%C5%9F%20etm%C9%99k%20ist%C9%99yir%C9%99m." target="_blank" class="single-card">
+            <div><div class="single-title">1 Ədəd Fərdi Reels / TikTok</div><div class="single-desc">Aylıq abunəlik istəməyənlər üçün sıfırdan ideya, ssenari, mobil çəkiliş və montaj daxil.</div></div>
+            <p class="single-price">50 - 80 AZN <span style="font-size:0.8rem; color:#9ca3af; font-weight:normal;">/ video</span></p>
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=994559636978&text=Salam%2C%20Yaln%C4%B1z%20montaj%20xid%C9%99ti%20%C3%BC%C3%A7%C3%BCn%20m%C3%BCraci%C9%99t%20ed%C9%99r%C9%99m." target="_blank" class="single-card">
+            <div><div class="single-title">Yalnız Montaj Xidməti</div><div class="single-desc">Çəkiliş materialları sizdən, səs dizaynı, dinamik kəsimlər və rəng korreksiyası bizdən.</div></div>
+            <p class="single-price">15 - 30 AZN <span style="font-size:0.8rem; color:#9ca3af; font-weight:normal;">/ video</span></p>
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=994559636978&text=Salam%2C%201%20g%C3%BCnl%C3%BCk%20biznes%2Ft%C9%99dbir%20%C3%A7%C9%99kili%C5%9Fi%20sifari%C5%9F%20etm%C9%99k%20ist%C9%99yir%C9%99m." target="_blank" class="single-card">
+            <div><div class="single-title">Biznes / Tədbir Çəkilişi (1 Günlük)</div><div class="single-desc">Xüsusi açılışlar, ustad dərsləri və ya məhsul kolleksiyası çəkilişləri üçün xidmət.</div></div>
+            <p class="single-price">150 - 250 AZN <span style="font-size:0.8rem; color:#9ca3af; font-weight:normal;">/ seans</span></p>
+        </a>
+    </div>
+
+    <h2>🎁 ENDİRİM PORTALI</h2>
+    <div class="game-section">
+        <p style="color: #9ca3af; font-size: 0.95rem; margin-bottom: 20px;">Özünüzə uyğun oyunu seçin və xüsusi endirim qazanın!</p>
+        
+        <div class="game-menu">
+            <button id="btn-tab-catcher" class="menu-btn active" onclick="switchGame('catcher')">🎯 Trend Catcher (5-10%)</button>
+            <button id="btn-tab-memory" class="menu-btn" onclick="switchGame('memory')">🎴 Yaddaş Kartı (5-10%)</button>
+            <button id="btn-tab-wheel" class="menu-btn" onclick="switchGame('wheel')">🎡 Şans Çarxı (5-10%)</button>
+            <button id="btn-tab-hardcore" class="menu-btn" onclick="switchGame('hardcore')">⚡ XTQ Səviyyə (Sərt 15%)</button>
+        </div>
+
+        <div id="portal-container" style="background:#030509; padding: 20px; border-radius: 20px; min-height: 280px; position: relative;">
+            
+            <div id="game-catcher" class="game-box active">
+                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;">Göstərici tam YAŞIL zonada olanda klikləyin! (3 cəhd)</p>
+                <div class="catcher-track">
+                    <div class="target-zone"></div>
+                    <div class="pointer" id="catcher-pointer"></div>
+                </div>
+                <button class="menu-btn active" onclick="catchTrend()">🎯 CATCH!</button>
+                <p id="catcher-status" style="margin-top:15px; font-weight:bold; color:#00f2fe;"></p>
+            </div>
+
+            <div id="game-memory" class="game-box">
+                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom: 10px;">Bütün cütləri tapın. Gediş: <span id="moves-count" style="color:#ba01ff; font-weight:bold;">0</span></p>
+                <div class="memory-grid" id="memory-board"></div>
+                <button class="menu-btn" onclick="initMemoryGame()">Sıfırla</button>
+            </div>
+
+            <div id="game-wheel" class="game-box">
+                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;">Mavi: 5% | Bənövşəyi: 10% | Narıncı: Sürpriz 5%</p>
+                <div class="wheel-container">
+                    <div class="wheel-pointer"></div>
+                    <div class="wheel" id="wheel-element"></div>
+                </div>
+                <button class="menu-btn active" style="margin-top:15px;" onclick="spinWheel()">🎡 Çarxı Fırlat</button>
+            </div>
+
+            <div id="game-hardcore" class="game-box">
+                <p style="font-size:0.85rem; color:#9ca3af;">Göy kvadratı 15 saniyədə tam 15 dəfə vurmalısınız!</p>
+                <div style="font-size:1.1rem; margin:12px 0;">Xal: <span id="score" style="color:#00f2fe; font-weight:bold;">0</span> | Zaman: <span id="timer" style="color:red; font-weight:bold;">15</span>s</div>
+                <button id="start-hard-btn" class="menu-btn active" onclick="startHardGame()">Oyuna Başla</button>
+                <div id="game-canvas-area">
+                    <div id="target-box" class="target" onclick="hitTarget()"></div>
+                </div>
+            </div>
+
+            <div id="portal-result">
+                <h3 id="res-title" style="margin:0; font-size:1.6rem;">🎉 Təbriklər!</h3>
+                <p id="res-desc" style="color:#9ca3af; font-size:0.95rem; margin: 12px 0;"></p>
+                <div id="res-action"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activeGame = 'catcher';
+
+        function switchGame(gameType) {
+            activeGame = gameType;
+            
+            // Bütün qutuları gizlət
+            document.querySelectorAll('.game-box').forEach(b => b.style.display = 'none');
+            // Tab aktivliyini vizual təmizlə
+            document.querySelectorAll('.game-menu .menu-btn').forEach(b => b.classList.remove('active'));
+            
+            // Nəticə və canvas pəncərələrini bağla
+            document.getElementById('portal-result').style.display = 'none';
+            document.getElementById('game-canvas-area').style.display = 'none';
+            
+            // Aktiv tabı rənglə və müvafiq qutunu aç
+            const targetTab = document.getElementById('btn-tab-' + gameType);
+            if(targetTab) targetTab.classList.add('active');
+            
+            const targetBox = document.getElementById('game-' + gameType);
+            if(targetBox) targetBox.style.display = 'block';
+
+            // Oyun dövrlərini təmiz və xətasız başlatmaq
+            if(gameType === 'catcher') initCatcher();
+            if(gameType === 'memory') initMemoryGame();
+            if(gameType === 'hardcore') resetHardGame();
+        }
+
+        function showPortalResult(discount, msg) {
+            const resDiv = document.getElementById('portal-result');
+            document.getElementById('res-title').innerText = discount > 0 ? "🎉 Qazandınız!" : "Uduzdunuz";
+            document.getElementById('res-desc').innerText = msg;
+            
+            const actionDiv = document.getElementById('res-action');
+            actionDiv.innerHTML = "";
+            
+            if(discount > 0) {
+                const text = encodeURIComponent("Salam, mini-oyundan xüsusi " + discount + "% endirim qazandım!");
+                actionDiv.innerHTML += `<a href="https://api.whatsapp.com/send?phone=994559636978&text=${text}" target="_blank" class="btn-claim">${discount}% Endirimi Götür</a>`;
+            }
+            actionDiv.innerHTML += `<button class="menu-btn" style="margin-top:12px; display:block; width:100%; cursor:pointer;" onclick="closeResult()">Yenidən Oyna</button>`;
+            resDiv.style.display = 'flex';
+        }
+
+        function closeResult() {
+            document.getElementById('portal-result').style.display = 'none';
+            if(activeGame === 'catcher') initCatcher();
+            if(activeGame === 'memory') initMemoryGame();
+            if(activeGame === 'hardcore') resetHardGame();
+        }
+
+        // --- OYUN 1: TREND CATCHER ---
+        let catcherPos = 0, catcherDir = 2, catcherAnimation, perfectHits = 0, totalAttempts = 0;
+        function initCatcher() {
+            perfectHits = 0; totalAttempts = 0;
+            const statusTxt = document.getElementById('catcher-status');
+            if(statusTxt) statusTxt.innerText = "";
+            if(catcherAnimation) cancelAnimationFrame(catcherAnimation);
+            animateCatcher();
+        }
+        function animateCatcher() {
+            if(activeGame !== 'catcher') return;
+            const ptr = document.getElementById('catcher-pointer');
+            if(!ptr) return;
+            catcherPos += catcherDir;
+            if(catcherPos >= 98 || catcherPos <= 0) catcherDir *= -1;
+            ptr.style.left = catcherPos + '%';
+            catcherAnimation = requestAnimationFrame(animateCatcher);
+        }
+        function catchTrend() {
+            totalAttempts++;
+            const statusTxt = document.getElementById('catcher-status');
+            if(catcherPos >= 40 && catcherPos <= 60) {
+                perfectHits++;
+                if(statusTxt) statusTxt.innerText = "Uğurlu! (" + perfectHits + "/" + totalAttempts + ")";
+            } else {
+                if(statusTxt) statusTxt.innerText = "Boş keçdi! (" + perfectHits + "/" + totalAttempts + ")";
+            }
+            if(totalAttempts >= 3) {
+                cancelAnimationFrame(catcherAnimation);
+                if(perfectHits === 3) showPortalResult(10, "Mükəmməl refleks! 3 cəhddən 3-ü də dəqiq vurduğunuz üçün 10% endirim!");
+                else if(perfectHits >= 1) showPortalResult(5, "Yaxşı nəticə! Trendi tutdunuz və 5% endirim qazandınız.");
+                else showPortalResult(0, "Təəssüf! Yaşıl sahəni vura bilmədiniz. Yenidən yoxlayın.");
+            }
+        }
+
+        // --- OYUN 2: YADDAŞ KARTLARI ---
+        let cards = ['🎥','🎥','🔥','🔥','✂️','✂️','💡','💡','🚀','🚀','📸','📸'], flippedCards = [], moves = 0, matchedCount = 0;
+        
+        function initMemoryGame() {
+            moves = 0; matchedCount = 0; flippedCards = [];
+            document.getElementById('moves-count').innerText = moves;
+            cards.sort(() => Math.random() - 0.5);
+            const board = document.getElementById('memory-board');
+            if(!board) return;
+            board.innerHTML = "";
+            cards.forEach((emoji) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.emoji = emoji;
+                card.innerText = "?";
+                card.onclick = flipCard;
+                board.appendChild(card);
+            });
+        }
+        function flipCard() {
+            if(flippedCards.length >= 2 || this.classList.contains('flipped') || this.classList.contains('matched')) return;
+            this.innerText = this.dataset.emoji;
+            this.classList.add('flipped');
+            flippedCards.push(this);
+            if(flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves-count').innerText = moves;
+                setTimeout(checkMatch, 600);
+            }
+        }
+        function checkMatch() {
+            if(flippedCards.length < 2) return;
+            if(flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+                flippedCards[0].classList.add('matched');
+                flippedCards[1].classList.add('matched');
+                matchedCount += 2;
+                if(matchedCount === cards.length) {
+                    if(moves <= 9) showPortalResult(10, "Mükəmməl yaddaş! Səbəb cəmi " + moves + " gedişlə bitirmənizdir: 10% endirim!");
+                    else showPortalResult(5, "Təbriklər! Oyunu bitirdiyiniz üçün sizə 5% endirim.");
+                }
+            } else {
+                flippedCards[0].innerText = "?"; flippedCards[1].innerText = "?";
+                flippedCards[0].classList.remove('flipped'); flippedCards[1].classList.remove('flipped');
+            }
+            flippedCards = [];
+        }
+
+        // --- OYUN 3: ŞANS ÇARXI ---
+        let isSpinning = false;
+        function spinWheel() {
+            if(isSpinning) return;
+            isSpinning = true;
+            const wheel = document.getElementById('wheel-element');
+            if(!wheel) return;
+            const prizeType = Math.random() > 0.4 ? 5 : 10;
+            let degrees = prizeType === 5 ? 60 : 180;
+            let totalRotation = 1440 + degrees;
+            wheel.style.transition = 'transform 4s cubic-bezier(0.1, 0.8, 0.1, 1)';
+            wheel.style.transform = "rotate(" + totalRotation + "deg)";
+            
+            setTimeout(() => {
+                isSpinning = false;
+                wheel.style.transition = 'none';
+                wheel.style.transform = "rotate(" + degrees + "deg)";
+                showPortalResult(prizeType, "Şans Çarxından sizə " + prizeType + "% dəyərində özəl endirim çıxdı!");
+            }, 4200);
+        }
+
+        // --- OYUN 4: HARDCORE SƏRT OYUN (Kvadrat vurma) ---
+        let score = 0, timeLeft = 15, gameInterval, moveInterval, isPlaying = false;
+        function resetHardGame() {
+            clearInterval(gameInterval); clearInterval(moveInterval);
+            score = 0; timeLeft = 15; isPlaying = false;
+            document.getElementById('score').innerText = score;
+            document.getElementById('timer').innerText = timeLeft;
+            document.getElementById('start-hard-btn').style.display = 'inline-block';
+            document.getElementById('game-canvas-area').style.display = 'none';
+        }
+        function startHardGame() {
+            isPlaying = true;
+            score = 0; timeLeft = 15;
+            document.getElementById('score').innerText = score;
+            document.getElementById('timer').innerText = timeLeft;
+            document.getElementById('start-hard-btn').style.display = 'none';
+            document.getElementById('game-canvas-area').style.display = 'block';
+            moveTarget();
+            
+            gameInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = timeLeft;
+                if(timeLeft <= 0) endHardGame();
+            }, 1000);
+
+            moveInterval = setInterval(moveTarget, 480);
+        }
+        function moveTarget() {
+            if(!isPlaying) return;
+            const box = document.getElementById('target-box');
+            if(!box) return;
+            const x = Math.floor(Math.random() * 290);
+            const y = Math.floor(Math.random() * 250);
+            box.style.left = x + 'px';
+            box.style.top = y + 'px';
+        }
+        function hitTarget() {
+            if(!isPlaying) return;
+            score++;
+            document.getElementById('score').innerText = score;
+            moveTarget();
+            if(score >= 15) endHardGame();
+        }
+        function endHardGame() {
+            isPlaying = false;
+            clearInterval(gameInterval); clearInterval(moveInterval);
+            if(score >= 15) showPortalResult(15, "İnanılmaz! Əsl XTQ reaksiyası! 15 xala çatdınız və Böyük 15%-lik endirimi tam haqq etdiniz!");
+            else showPortalResult(0, "Zaman bitdi! Topladığınız xal: " + score + ". Endirim üçün 15 xala çatmır.");
+        }
+
+        // Səhifə yüklənəndə ilk oyunu tam stabil modda aç
+        window.onload = () => { switchGame('catcher'); };
+    </script>
+</body>
+</html>
